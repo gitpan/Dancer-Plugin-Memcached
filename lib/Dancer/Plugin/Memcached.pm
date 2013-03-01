@@ -1,6 +1,6 @@
 package Dancer::Plugin::Memcached;
-BEGIN {
-  $Dancer::Plugin::Memcached::VERSION = '0.01';
+{
+  $Dancer::Plugin::Memcached::VERSION = '0.02';
 }
 
 use strict;
@@ -28,9 +28,9 @@ In your configuration, a list of servers with port numbers needs to be defined.
 
     plugins:
         Memcached:
-	    servers: 
-	        - "10.0.0.15:11211"
-		- "10.0.0.17:11211"
+        servers: 
+            - "10.0.0.15:11211"
+        - "10.0.0.17:11211"
             default_timeout: 86400
 
 The C<default_timeout> specifies an fallback time for keys to expire from the
@@ -45,7 +45,7 @@ In your package:
 
     get '/' sub => {
         # Do your logic here
-	...
+    ...
         memcached_set template($foo);
     };
 
@@ -65,8 +65,8 @@ register memcached_check => sub
 {
         before sub
         {
-		my $set = plugin_setting;	
-		$cache->set_servers($set->{servers});
+        my $set = plugin_setting;    
+        $cache->set_servers($set->{servers});
 
                 my $hit = $cache->get(request->{path_info});
                 return $hit if($hit);
@@ -82,17 +82,17 @@ can optionally be set.
 
 register memcached_set => sub
 {
-	my($content, $expiration) = @_;
-	my $set = plugin_setting;	
-	$cache->set_servers($set->{servers});
+    my($self, $content, $expiration) = plugin_args(@_);
+    my $set = plugin_setting;    
+    $cache->set_servers($set->{servers});
 
-	my $hit = $cache->set(
-		request->{path_info}, 
-		$content, 
-		$expiration || $set->{default_timeout}
-	);
+    my $hit = $cache->set(
+        request->{path_info}, 
+        $content, 
+        $expiration || $set->{default_timeout}
+    );
 
-	return $content if $hit;
+    return $content if $hit;
 };
 
 =head2 memcached_get($key)
@@ -103,12 +103,12 @@ Grab a specified key. Returns false if the key is not found.
 
 register memcached_get => sub
 {
-	my $key = shift;
+    my ($self, $key) = plugin_args(@_);
 
-	my $set = plugin_setting;
-	$cache->set_servers($set->{servers});
-	
-	return $cache->get($key);
+    my $set = plugin_setting;
+    $cache->set_servers($set->{servers});
+    
+    return $cache->get($key);
 };
 
 =head2 memcached_store($key, $content, [$expiration])
@@ -120,17 +120,17 @@ any key name.
 
 register memcached_store => sub
 {
-	my($key, $content, $expiration) = @_;
-	my $set = plugin_setting;	
-	$cache->set_servers($set->{servers});
+    my($self, $key, $content, $expiration) = plugin_args(@_);
+    my $set = plugin_setting;    
+    $cache->set_servers($set->{servers});
 
-	my $hit = $cache->set(
-		$key, 
-		$content, 
-		$expiration || $set->{default_timeout}
-	);
+    my $hit = $cache->set(
+        $key, 
+        $content, 
+        $expiration || $set->{default_timeout}
+    );
 
-	return $content if $hit;
+    return $content if $hit;
 };
 
 
@@ -139,6 +139,10 @@ register_plugin;
 =head1 AUTHOR
 
 Squeeks, C<< <squeek at cpan.org> >>
+
+=head1 CONTRIBUTORS
+
+Zefram, C<< <zefram@fysh.org> >>
 
 =head1 BUGS
 
@@ -182,7 +186,7 @@ Dancer Web Framework - L<Dancer>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2010 Squeeks.
+Copyright 2013 Squeeks.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published

@@ -4,6 +4,7 @@ MANIFEST
 META.yml
 Makefile.PL
 README
+dancer_test_api_update.patch
 dist.ini
 lib/Dancer/Plugin/Memcached.pm
 t/01-use.t

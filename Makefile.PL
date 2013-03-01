@@ -4,28 +4,28 @@ use warnings;
 
 
 
-use ExtUtils::MakeMaker 6.31;
+use ExtUtils::MakeMaker 6.30;
 
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'Cache response content to memcached',
-  'AUTHOR' => 'Squeeks <squeek@cpan.org>',
-  'BUILD_REQUIRES' => {},
-  'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.31'
+  "ABSTRACT" => "Cache response content to memcached",
+  "AUTHOR" => "Squeeks <squeek\@cpan.org>",
+  "BUILD_REQUIRES" => {},
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
   },
-  'DISTNAME' => 'Dancer-Plugin-Memcached',
-  'EXE_FILES' => [],
-  'LICENSE' => 'perl',
-  'NAME' => 'Dancer::Plugin::Memcached',
-  'PREREQ_PM' => {
-    'Cache::Memcached' => '0.06',
-    'Dancer' => '1.10'
+  "DISTNAME" => "Dancer-Plugin-Memcached",
+  "EXE_FILES" => [],
+  "LICENSE" => "perl",
+  "NAME" => "Dancer::Plugin::Memcached",
+  "PREREQ_PM" => {
+    "Cache::Memcached" => "0.06",
+    "Dancer" => "1.20"
   },
-  'VERSION' => '0.01',
-  'test' => {
-    'TESTS' => 't/*.t'
+  "VERSION" => "0.02",
+  "test" => {
+    "TESTS" => "t/*.t"
   }
 );
 
